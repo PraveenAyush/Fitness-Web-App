@@ -19,6 +19,21 @@ const Exercises = ({exercises, setExercises, bodyPart}) => {
         window.scrollTo({top: 1800, behavior: 'smooth'})
     }
 
+    useEffect(() => {
+        const fetchExercisesData = async () => {
+            let exercisesdata = []
+
+            if (bodyPart === 'all') {
+                exercisesdata = await fetchData(url, exerciseOptions)
+            } else {
+                exercisesdata = await fetchData(`${url}/bodyPart/${bodyPart}`, exerciseOptions)
+            }
+
+            setExercises(exercisesdata)
+        }
+        fetchExercisesData()
+    }, [bodyPart, setExercises])
+
     return (
         <Box id='exercises'
             sx={{mt: {lg: '110px'}}}
